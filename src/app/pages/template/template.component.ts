@@ -32,7 +32,6 @@ export class TemplateComponent implements OnInit {
         }
       )
       console.log(res);
-            
     });
 
   }

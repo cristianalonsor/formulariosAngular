@@ -6,26 +6,35 @@
 
     <div class="form-group row">
       <label class="col-2 col-form-label">Nombre</label>
-      <div class="col-8">
+      <div class="col">
 
         <input class="form-control"
                type="text"
                placeholder="Nombre"
-               formGroupName="nombre"
+               formControlName="nombre"
+               [class.is-invalid]="nombreNoValido"
                >
                <!-- para relacionar el form group con cada elemento se hace mediante el
                 formcontrolname y la propiedad dentro del formGroup que lo contralara-->
+                <small *ngIf="nombreNoValido" class="text-danger">
+                  Ingrese nombre con al menos 5 letras
+                </small>
       </div>
     </div>
 
     <div class="form-group row">
       <label class="col-2 col-form-label">Apellido</label>
-      <div class="col-8">
+      <div class="col">
 
         <input class="form-control"
                type="text"
                placeholder="Apellido"
-               formGroupName="apellido">
+               formControlName="apellido"
+               [class.is-invalid]="apellidoNoValido"
+               >
+               <small *ngIf="apellidoNoValido" class="text-danger">
+                Ingrese apellido con al menos 5 letras
+              </small>
       </div>
     </div>
 
@@ -33,12 +42,89 @@
 
   <div class="form-group row">
     <label class="col-2 col-form-label">Correo</label>
-    <div class="col-8">
+    <div class="col">
 
       <input class="form-control"
              type="email"
              placeholder="Correo electrónico"
-             formGroupName="email">
+             formControlName="email"
+             [class.is-invalid]="emailNoValido"
+             >
+             <small *ngIf="emailNoValido" class="text-danger">
+              Ingrese correo válido
+            </small>
+    </div>
+  </div>
+
+
+  <div class="form-group row" formGroupName="direccion">
+    <label class="col-2 col-form-label">Direccion</label>
+    <div class="form-row col">
+
+      <div class="col">
+        <input type="text"
+               class="form-control"
+               placeholder="Comuna"
+               formControlName="comuna"
+               [class.is-invalid]="comunaNoValido">
+        <small *ngIf="comunaNoValido" class="text-danger">
+                Ingrese <b>Comuna</b> válido
+        </small>
+      </div>
+
+      <div class="col">
+        <input type="text"
+               class="form-control"
+               placeholder="Region"
+               formControlName="region"
+               [class.is-invalid]="regionNoValido">
+        <small *ngIf="regionNoValido" class="text-danger">
+                Ingrese <b>REGION</b> válido
+        </small>
+      </div>
+
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="form-group row">
+    <div class="col">
+
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th>ID</th>
+            <th>Pasatiempos</th>
+            <th>Borrar</th>
+          </tr>
+        </thead>
+
+        <!-- como duplicare los td busco donde poner el arreglo un lvl superior -->
+        <tbody formArrayName="pasatiempos">
+          <tr *ngFor="let control of pasatiempos.controls; let i = index">
+            <td>{{i+1}}</td>
+            <td>
+              <input type="text"
+                     class="form-control"
+                     [formControlName]="i">
+            </td>
+            <td>
+              <button class="btn-danger">
+                Borrar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary mt-3 mb-5 btn-block"
+                type="button">
+          + Agregar
+        </button>
+      </div>
+
     </div>
   </div>
 
@@ -54,3 +140,16 @@
   </div>
 
 </form>
+
+<hr>
+
+<pre>
+  estado formulario: {{ forma.valid}}
+  <br>
+  status: {{forma.status}}
+</pre>
+
+<pre>
+  {{forma.value | json}}
+</pre>
+
