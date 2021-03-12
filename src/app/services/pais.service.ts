@@ -12,9 +12,9 @@ export class PaisService {
   getPaises() {
 
     return this.http.get('https://restcountries.eu/rest/v2/lang/es')
-      .pipe(map((resp: any[]) => { //este map me permite transformar la data recibida 
+      .pipe(map((resp: any[]) => { // este map me permite transformar la data recibida
         return resp.map(pais => ({ nombre: pais.name, codigo: pais.alpha3Code }) // este es el map de los arreglos
-        )
+        );
       }));
   }
 
